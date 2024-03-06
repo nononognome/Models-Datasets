@@ -71,7 +71,7 @@ def delta(dataset: Union[TensorDataset, Tensor], threshold = 0.1, off_spike = Fa
             output_data, cumulative_delta = cumulative_spikes(delta, off_spike=off_spike, threshold=threshold)
     elif spiking and threshold and threshold_as_percentage:
         if not cumulative:
-            threshold = np.percentile(delta.abs(), 100 - threshold)
+            threshold = np.percentile(delta.abs(), 100 - (threshold*100))
             if not off_spike:
                 output_data = torch.ones_like(data) * (delta >= threshold)
             else:
@@ -79,12 +79,13 @@ def delta(dataset: Union[TensorDataset, Tensor], threshold = 0.1, off_spike = Fa
                 off_spk = -torch.ones_like(data) * (delta <= -threshold)
                 output_data = on_spk + off_spk
         else:
-            output_data, cumulative_delta = cumulative_spikes(delta, off_spike=True, threshold=threshold)
+            threshold = np.percentile(delta.abs(), 100 - (threshold*10))
+            output_data, cumulative_delta = cumulative_spikes(delta, off_spike=off_spike, threshold=threshold)
     else:
         if not cumulative:
             output_data: Tensor = delta
         else:
-            _, cumulative_delta = cumulative_spikes(off_spike=True, threshold=threshold)
+            _, cumulative_delta = cumulative_spikes(off_spike=off_spike, threshold=threshold)
             output_data = cumulative_delta
 
     
