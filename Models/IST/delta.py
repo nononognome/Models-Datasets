@@ -58,6 +58,10 @@ def delta(dataset: Union[TensorDataset, Tensor], threshold = 0.1, off_spike = Fa
     # Calculate the difference between sequential datapoints
     delta: Tensor = (data - data_offset)
 
+    if threshold_as_percentage:
+        if cumulative: threshold = np.percentile(delta.abs(), 100 - (threshold*10))
+        else: threshold = np.percentile(delta.abs(), 100 - (threshold*100))
+
     # Calculate spikes when spiking flag is set, and a threshold set
     if spiking and threshold:
         if not cumulative:
@@ -68,18 +72,6 @@ def delta(dataset: Union[TensorDataset, Tensor], threshold = 0.1, off_spike = Fa
                 off_spk = -torch.ones_like(data) * (delta <= -threshold)
                 output_data = on_spk + off_spk
         else:
-            output_data, cumulative_delta = cumulative_spikes(delta, off_spike=off_spike, threshold=threshold)
-    elif spiking and threshold and threshold_as_percentage:
-        if not cumulative:
-            threshold = np.percentile(delta.abs(), 100 - (threshold*100))
-            if not off_spike:
-                output_data = torch.ones_like(data) * (delta >= threshold)
-            else:
-                on_spk = torch.ones_like(data) * (delta >= threshold)
-                off_spk = -torch.ones_like(data) * (delta <= -threshold)
-                output_data = on_spk + off_spk
-        else:
-            threshold = np.percentile(delta.abs(), 100 - (threshold*10))
             output_data, cumulative_delta = cumulative_spikes(delta, off_spike=off_spike, threshold=threshold)
     else:
         if not cumulative:
