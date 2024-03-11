@@ -13,12 +13,13 @@ def rate(dataset: Union[TensorDataset, Tensor], num_steps=False, extend=False):
         data = dataset
 
 
-    # If Time Varying
+    # If Time Varying with same Dims
     if not num_steps:
         # Ensure data is between 0 and 1 and pass through bernoulli for a poisson spike train
         clipped_data = torch.clamp(data, min=0, max=1)
         output_data = torch.bernoulli(clipped_data)
 
+    # If Time Varying with extended Dims
     elif extend:
         time_data = (data.repeat(tuple(
                     [num_steps] + torch.ones(len(data.size()), dtype=int).tolist()
@@ -30,6 +31,7 @@ def rate(dataset: Union[TensorDataset, Tensor], num_steps=False, extend=False):
 
     # If flattened input
     else:
+        data = data.flatten(start_dim=1)
         time_data = (data.repeat(tuple(
                     [num_steps] + torch.ones(len(data.size()), dtype=int).tolist()
                     )))
