@@ -1,0 +1,109 @@
+% This file was created with tikzplotlib v0.10.1.
+\begin{tikzpicture}
+
+\definecolor{darkgray176}{RGB}{176,176,176}
+\definecolor{darkred}{RGB}{139,0,0}
+\definecolor{navy}{RGB}{0,0,128}
+\definecolor{skyblue}{RGB}{135,206,235}
+
+\begin{axis}[
+log basis x={10},
+tick align=outside,
+tick pos=left,
+title={Naive Time Contrast Test F1 Score},
+x grid style={darkgray176},
+xlabel={Threshold (\% of data)},
+xmajorgrids,
+xmin=0.00822340159426889, xmax=0.608020895329329,
+xmode=log,
+xtick style={color=black},
+xtick={0.0001,0.001,0.01,0.1,1,10},
+xticklabels={
+  $\mathdefault{10^{-4}}$,
+  $\mathdefault{10^{-3}}$,
+  $\mathdefault{10^{-2}}$,
+  $\mathdefault{10^{-1}}$,
+  $\mathdefault{10^{0}}$,
+  $\mathdefault{10^{1}}$
+},
+y grid style={darkgray176},
+ylabel={F1 (\%)},
+ymajorgrids,
+ymin=6.13890185261916, ymax=45.3232353351718,
+ytick style={color=black}
+]
+\addplot [semithick, darkred]
+table {%
+0.01 38.6236280276015
+0.025 28.7258458577034
+0.05 42.4465096174627
+0.1 7.92000792000792
+0.2 35.522239028034
+0.5 33.6240327839621
+};
+\addplot [semithick, red]
+table {%
+0.01 36.5259026930622
+0.025 36.9946605327496
+0.05 31.5848516639739
+0.1 43.5421292677831
+0.2 31.4003326179816
+0.5 36.8335196868962
+};
+\addplot [semithick, darkred]
+table {%
+0.01 32.8521573771461
+0.025 33.9266164883701
+0.05 30.8479820666868
+0.1 39.9787397216703
+0.2 38.2606786196853
+0.5 38.0791574815035
+};
+\addplot [semithick, red]
+table {%
+0.01 31.3099169162104
+0.025 36.2919947691182
+0.05 28.1604310002476
+0.1 34.8889526648583
+0.2 22.0388577637263
+0.5 24.2349746301722
+};
+\addplot [semithick, navy]
+table {%
+0.01 29.8576336769859
+0.025 29.4927338238118
+0.05 27.1971849468045
+0.1 22.5189662082866
+0.2 19.442809952085
+0.5 20.284728464148
+};
+\addplot [semithick, skyblue]
+table {%
+0.01 22.2342234871968
+0.025 28.290534863325
+0.05 27.6432293093287
+0.1 28.4475895621406
+0.2 31.426884852473
+0.5 24.0392180596744
+};
+\addplot [semithick, navy]
+table {%
+0.01 26.2146336469991
+0.025 24.8891388931037
+0.05 29.6175926806652
+0.1 30.8659740704633
+0.2 27.4414761483727
+0.5 29.5137710096109
+};
+\addplot [semithick, skyblue]
+table {%
+0.01 38.3767837721239
+0.025 28.5940588787348
+0.05 22.7038623190993
+0.1 20.3826703579591
+0.2 27.4848704519723
+0.5 8.65384615384616
+};
+\end{axis}
+
+\end{tikzpicture}
