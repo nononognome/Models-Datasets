@@ -39,6 +39,7 @@ def rate(dataset: Union[TensorDataset, Tensor], num_steps=False, extend=False):
         # Ensure data is between 0 and 1 and pass through bernoulli for a poisson spike train
         clipped_data = torch.clamp(time_data, min=0, max=1)
         output_data = torch.bernoulli(clipped_data)
+        output_data = torch.transpose(output_data, 0, 1)
     
 
     if type(dataset) == TensorDataset: return TensorDataset(output_data, labels)
